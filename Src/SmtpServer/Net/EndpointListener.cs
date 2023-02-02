@@ -11,6 +11,7 @@ namespace SmtpServer.Net
     {
         public const string LocalEndPointKey = "EndpointListener:LocalEndPoint";
         public const string RemoteEndPointKey = "EndpointListener:RemoteEndPoint";
+        public const string ActivityIdKey = "EndpointListener:ActivityId";
 
         readonly IEndpointDefinition _endpointDefinition;
         readonly TcpListener _tcpListener;
@@ -42,6 +43,7 @@ namespace SmtpServer.Net
 
             context.Properties.Add(LocalEndPointKey, _tcpListener.LocalEndpoint);
             context.Properties.Add(RemoteEndPointKey, tcpClient.Client.RemoteEndPoint);
+            context.Properties.Add(ActivityIdKey, Guid.NewGuid());
 
             var stream = tcpClient.GetStream();
             stream.ReadTimeout = (int)_endpointDefinition.ReadTimeout.TotalMilliseconds;
